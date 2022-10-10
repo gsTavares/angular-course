@@ -11,7 +11,7 @@ export class ListRenderComponent implements OnInit {
 
   // Interfaces are important to maintain code pattern in scalable applications
 
-  animals: Animal[] = [];
+  animals: Animal[] = []; 
 
   animalDetails: string = "";
 
