@@ -1,0 +1,14 @@
+<div class="class">
+
+    <!-- *ngIf receives a boolean expression. If true, the element will be rendered on the page-->
+    <div *ngIf="canShow">Estamos mostrando isso porque foi permitido</div>
+
+    <!-- with else statement -->
+    <h2 *ngIf="name == 'Gustavo'; else nameNotFound">O nome é Gustavo</h2>
+    <!-- nameNotFound: ng-template for else statement-->
+    <ng-template #nameNotFound>
+        <div>
+            <h2>O nome não foi encontrado</h2>
+        </div>
+    </ng-template>
+</div>
