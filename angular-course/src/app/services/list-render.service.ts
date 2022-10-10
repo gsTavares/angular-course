@@ -20,4 +20,8 @@ export class ListRenderService {
   getAll(): Observable<Animal[]> {
     return this.http.get<Animal[]>(this.apiUrl + "/animals");
   }
+
+  getItem(id: number): Observable<Animal> {
+    return this.http.get<Animal>(`${this.apiUrl}/animals/${id}`); 
+  }
 }
