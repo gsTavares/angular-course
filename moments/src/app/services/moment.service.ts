@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Moment } from '../models/Moment';
+import { Response } from '../models/util/Response';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -11,12 +12,14 @@ import { environment } from 'src/environments/environment';
 export class MomentService {
 
   private baseApiUrl: string = environment.baseApiUrl;
-  private apiUrl: string = `${this.baseApiUrl}/moment`;
 
   constructor(private http: HttpClient) { }
 
-  createMoment(moment: Moment): Observable<Moment> {
+  getMoments() : Observable<Response<Moment[]>> {
+    return this.http.get<Response<Moment[]>>(this.baseApiUrl+"/moments");
+  }
 
-    return this.http.post<Moment>(this.apiUrl, moment);
+  createMoment(moment: Moment): Observable<Moment> {
+    return this.http.post<Moment>(this.baseApiUrl+"/moment", moment);
   }
 }
