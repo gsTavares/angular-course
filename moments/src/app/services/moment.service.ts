@@ -30,4 +30,8 @@ export class MomentService {
   deleteMomentByid(id: number) : Observable<Response<Moment>> {
     return this.http.delete<Response<Moment>>(`${this.baseApiUrl}/moments/${id}`);
   }
+
+  updateMoment(moment: Moment): Observable<Response<Moment>> {
+    return this.http.put<Response<Moment>>(`${this.baseApiUrl}/moment`, moment);
+  }
 }
