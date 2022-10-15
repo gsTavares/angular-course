@@ -19,11 +19,15 @@ export class MomentService {
     return this.http.get<Response<Moment[]>>(this.baseApiUrl+"/moments");
   }
 
-  createMoment(moment: Moment): Observable<Moment> {
-    return this.http.post<Moment>(this.baseApiUrl+"/moment", moment);
+  createMoment(moment: Moment): Observable<Response<Moment>> {
+    return this.http.post<Response<Moment>>(this.baseApiUrl+"/moment", moment);
   }
 
   getMomentById(id: number): Observable<Response<Moment>> {
     return this.http.get<Response<Moment>>(`${this.baseApiUrl}/moments/${id}`);
+  }
+
+  deleteMomentByid(id: number) : Observable<Response<Moment>> {
+    return this.http.delete<Response<Moment>>(`${this.baseApiUrl}/moments/${id}`);
   }
 }

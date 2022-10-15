@@ -34,11 +34,9 @@ export class NewMomentComponent implements OnInit {
     //   formData.append('image', moment.image);
     // }
 
-    const message: String = '';
-
-    await this.momentService.createMoment(moment).subscribe();
-
-    this.messagesService.add("Momento criado com sucesso");
+    await this.momentService.createMoment(moment).subscribe(response => {
+      this.messagesService.add(response.messages[0]);
+    });
 
     this.router.navigate(["/"]);
   }
