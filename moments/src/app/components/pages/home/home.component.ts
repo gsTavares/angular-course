@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MomentService } from 'src/app/services/moment.service';
 import { Moment } from 'src/app/models/Moment';
 import { environment } from 'src/environments/environment';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +13,10 @@ export class HomeComponent implements OnInit {
 
   allMoments: Moment[] = [];
   moments: Moment[] = [];
-  baseApiUrl = environment.baseApiUrl; 
+  baseApiUrl: string = environment.baseApiUrl; 
+
+  faSearch: IconDefinition = faSearch;
+  searchTerm: string = '';
 
   constructor(private momentService: MomentService) { }
 
@@ -28,6 +31,17 @@ export class HomeComponent implements OnInit {
       this.moments = body;
 
     });
+  }
+
+  search(event: Event): void {
+
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+
+    this.moments = this.allMoments.filter(moment => {
+      return moment.title.toLowerCase().includes(value);
+    })
+
   }
 
 }
