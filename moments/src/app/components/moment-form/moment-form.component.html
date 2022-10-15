@@ -4,6 +4,8 @@
 validation -->
 
 <form (ngSubmit)="submit()" [formGroup]="momentForm" #formDir="ngForm">
+    <input type="hidden" formControlName="id" />
+    
     <div class="form-group">
         <label for="title">Título:</label>
         <input type="text" placeholder="Coloque o título" formControlName="title" required />
@@ -22,7 +24,7 @@ validation -->
 
     <div class="form-group">
         <label for="image">Coloque a foto que mais marcou:</label>
-        <input type="file" />
+        <input type="file" (change)="onFileSelected($event)" />
     </div>
 
     <input type="submit" value="{{ btnText }}" />

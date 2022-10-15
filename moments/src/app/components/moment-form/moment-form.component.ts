@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Moment } from 'src/app/models/Moment';
 
 @Component({
   selector: 'app-moment-form',
@@ -9,7 +10,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class MomentFormComponent implements OnInit {
 
+  @Output() onSubmit = new EventEmitter<Moment>()
   @Input() btnText!: string
+  @Input() momentData?: Moment | null = null;
 
   /**  
    * momentForm: FormGroup -> component formGroup name for [formGroup] directive 
@@ -29,9 +32,9 @@ export class MomentFormComponent implements OnInit {
      */
 
     this.momentForm = new FormGroup({
-      id: new FormControl(''),
-      title: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
+      id: new FormControl(this.momentData ? this.momentData.id : ''),
+      title: new FormControl(this.momentData ? this.momentData.title : '', [Validators.required]),
+      description: new FormControl(this.momentData ? this.momentData.description : '', [Validators.required]),
       image: new FormControl('')
     })
   }
@@ -51,7 +54,18 @@ export class MomentFormComponent implements OnInit {
       return;
     }
 
-    console.log('Enviou o formulário');
+    this.onSubmit.emit(this.momentForm.value)
   }
 
+  async onFileSelected(event: any) {
+    const imgBase64 = await this.toBase64(event.target.files[0]);
+    this.momentForm.patchValue({image: imgBase64})
+  }
+
+  toBase64 = (file: Blob) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
 }
